@@ -31,9 +31,13 @@ public class AbstractStepDefs {
         try {
             try {
                 Constructor<T> constructor = clazz.getConstructor(WebDriver.class);
-                return constructor.newInstance(getDriver());
+                T page = constructor.newInstance(getDriver());
+                setCurrentPage(page);
+                return page;
             } catch (NoSuchMethodException e) {
-                return clazz.newInstance();
+                T page = clazz.newInstance();
+                setCurrentPage(page);
+                return page;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -41,18 +45,30 @@ public class AbstractStepDefs {
     }
 
     protected <T extends AbstractPage> T openPage(Class<T> clazz) {
-        T page = initPage(clazz);
-        getDriver().get(page.getUrl());
-        page.waitUntilPageCompletelyLoaded();
-        return page;
+        if(AbstractPage.currentPage == null || AbstractPage.currentPage.getClass() != clazz){
+            T page = initPage(clazz);
+            getDriver().get(page.getUrl());
+            page.waitUntilPageCompletelyLoaded();
+            return page;
+        } else {
+            return (T) AbstractPage.currentPage;
+        }
+
     }
 
-    protected CompanySearchMainPage openCompaniesSearchPage(){
+    protected CompanySearchMainPage openCompaniesSearchPage() {
         return openPage(CompanySearchMainPage.class);
 //        if(!SEARCH_PAGE_URL.equals(getDriver().getCurrentUrl())){
 //            return openPage(CompanySearchMainPage.class);
 //        } else {
 //            return initPage(CompanySearchMainPage.class);
 //        }
+    }
+
+    private void setCurrentPage(AbstractPage abstractPage) {
+        if (AbstractPage.currentPage == null
+                || abstractPage.getClass() != AbstractPage.currentPage.getClass()) {
+            AbstractPage.currentPage = abstractPage;
+        }
     }
 }

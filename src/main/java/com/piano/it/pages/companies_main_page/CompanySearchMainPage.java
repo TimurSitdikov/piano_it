@@ -29,9 +29,9 @@ public class CompanySearchMainPage extends AbstractPage {
     }
 
     public void searchFor(Company company) {
-        if(!company.getName().isEmpty()) companySearchForm.enterCompanyName(company.getName());
-        if(!company.getLocation().isEmpty()) companySearchForm.enterLocationName(company.getLocation());
-        if(!company.getTags().isEmpty()){
+        if(company.getName() != null && !company.getName().isEmpty()) companySearchForm.enterCompanyName(company.getName());
+        if(company.getLocation()!= null && !company.getLocation().isEmpty()) companySearchForm.enterLocationName(company.getLocation());
+        if(company.getTags()!= null && !company.getTags().isEmpty()){
             companySearchForm.openAdvancedSearch();
             companySearchForm.enterTags(company.getTags());
         }

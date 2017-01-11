@@ -11,27 +11,27 @@ import java.util.List;
 public class SearchStepDefs extends AbstractStepDefs {
 
     @When("^I search for company:$")
-    public void iSearchForCompanyCompany(Company company) {
-        openPage(CompanySearchMainPage.class).searchFor(company);
+    public void iSearchForCompanyCompany(List<Company> companies) {
+        openPage(CompanySearchMainPage.class).searchFor(companies.get(0));
     }
 
     @Then("^I check that results contain company:$")
-    public void iCheckThatResultsContainCompany(Company company) {
+    public void iCheckThatResultsContainCompany(List<Company> companies) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         boolean companyFound = false;
-        while (mainPage.hasNextResultPage()){
-            List<Company> companies = mainPage.getCompanies();
-            if(companies.contains(company)){
+        do {
+            List<Company> companiesFromPage = mainPage.getCompanies();
+            if(companiesFromPage.contains(companies.get(0))){
                 companyFound = true;
                 break;
             }
             mainPage.nextPage();
-        }
-        Assert.assertTrue(companyFound, "Company: " + company + " not found in search results.");
-
+        } while (mainPage.hasNextResultPage());
+        Assert.assertTrue(companyFound, "Company: " + companies.get(0) + " not found.");
     }
 
     @Then("^I check that companies in result are from: (.*)$")
     public void iCheckThatCompaniesInResultAreFromLocation(String location) {
+        System.out.println("1");
     }
 }

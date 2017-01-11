@@ -37,7 +37,7 @@ public class CompanyLabelElement extends HtmlElement{
     public Company getCompany(){
         Company company = new Company();
         company.setLocation(getLocationName());
-        company.setName(getName());
+        company.setName(getCompanyName());
         company.setTags(getTags());
         return company;
     }

@@ -12,14 +12,14 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: info.cukes:cucumber-java:1.1.8" level="project" />
-    <orderEntry type="library" name="Maven: info.cukes:cucumber-core:1.1.8" level="project" />
-    <orderEntry type="library" name="Maven: info.cukes:cucumber-html:0.2.3" level="project" />
-    <orderEntry type="library" name="Maven: info.cukes:cucumber-jvm-deps:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: info.cukes:gherkin:2.12.2" level="project" />
     <orderEntry type="library" name="Maven: info.cukes:cucumber-testng:1.1.8" level="project" />
     <orderEntry type="library" name="Maven: org.testng:testng:6.8.8" level="project" />
     <orderEntry type="library" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.27" level="project" />
+    <orderEntry type="library" name="Maven: info.cukes:cucumber-core:1.1.8" level="project" />
+    <orderEntry type="library" name="Maven: info.cukes:cucumber-jvm-deps:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: info.cukes:gherkin:2.12.2" level="project" />
+    <orderEntry type="library" name="Maven: info.cukes:cucumber-html:0.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-java:2.53.1" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:2.53.1" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-remote-driver:2.53.1" level="project" />

@@ -1,12 +1,10 @@
-package com.piano.it.pages.companies_main_page.elements;
+package com.piano.it.pages.company_search_page.elements;
 
 import com.piano.it.exceptions.CommonTestException;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import ru.yandex.qatools.htmlelements.element.TextInput;
-
-import java.util.List;
 
 @FindBy(id = "company-search-form")
 public class CompanySearchForm extends HtmlElement {
@@ -37,9 +35,9 @@ public class CompanySearchForm extends HtmlElement {
         companyNameInput.sendKeys(companyName);
     }
 
-    public void enterLocationName(String locationName){
+    public void enterLocations(String locations){
         locationInput.clear();
-        locationInput.sendKeys(locationName);
+        locationInput.sendKeys(locations);
     }
 
     public void clickSearch(){
@@ -66,12 +64,8 @@ public class CompanySearchForm extends HtmlElement {
         return advancedSearchButton.isDisplayed();
     }
 
-    public void enterTags(List<String> tags){
-        enterTag(tags.toString().replaceAll("\\{|\\}",""));
-    }
-
-    public void enterTag(String tag){
+    public void enterTags(String tags){
         tagsInput.clear();
-        tagsInput.sendKeys(tag);
+        tagsInput.sendKeys(tags);
     }
 }

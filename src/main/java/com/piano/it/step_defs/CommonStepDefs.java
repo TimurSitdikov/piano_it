@@ -6,6 +6,6 @@ public class CommonStepDefs extends AbstractStepDefs {
 
     @Given("^I open main page$")
     public void iOpenMainPage() {
-        openCompaniesSearchPage();
+        openCompanySearchPage();
     }
 }

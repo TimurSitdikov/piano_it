@@ -1,12 +1,10 @@
 package com.piano.it.bo;
 
-import java.util.List;
-
 public class Company {
 
     private String name;
-    private String location;
-    private List<String> tags;
+    private String locations;
+    private String tags;
 
     public String getName() {
         return name;
@@ -16,19 +14,28 @@ public class Company {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLocations() {
+        return locations;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void addTag(String tag){
+        if(tags == null || tags.isEmpty()){
+            tags = tag;
+        }
+        else{
+            tags = tags + "," + tag;
+        }
     }
 
-    public List<String> getTags() {
+    public void setLocations(String locations) {
+        this.locations = locations;
+    }
+
+    public String getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 
@@ -45,7 +52,7 @@ public class Company {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (locations != null ? locations.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }
@@ -54,7 +61,7 @@ public class Company {
     public String toString() {
         return "Company{" +
                 "name: '" + name + '\'' +
-                ", location: '" + location + '\'' +
+                ", locations: '" + locations + '\'' +
                 ", tags: " + tags +
                 '}';
     }

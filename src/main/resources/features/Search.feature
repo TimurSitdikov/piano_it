@@ -14,14 +14,12 @@ Feature: Feature to test search mechanism.
       | name    |
       | trivago |
 
-#  @SearchCompanyByLocationSearch
-#  Scenario Outline: Test for simple search by company location
-#    Given I open main page
-#    When I search for company:
-#      | location   |
-#      | <location> |
-#    Then I check that companies in result are from: <location>
-#
-#
-#    Examples:
-#      | location |
+  @SearchCompanyByLocationSearch
+  Scenario: Test for simple search by company location
+    Given I open main page
+    When I search for company from:
+      | locations |
+      | Moscow    |
+    Then I check that companies in result are from: Moscow,Moskva,Moscow Federal City,Moskau
+
+

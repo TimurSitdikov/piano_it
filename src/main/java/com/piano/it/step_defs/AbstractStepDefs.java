@@ -2,7 +2,7 @@ package com.piano.it.step_defs;
 
 import com.piano.it.driver.DriverManager;
 import com.piano.it.pages.AbstractPage;
-import com.piano.it.pages.companies_main_page.CompanySearchMainPage;
+import com.piano.it.pages.company_search_page.CompanySearchMainPage;
 import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Constructor;
@@ -56,7 +56,7 @@ public class AbstractStepDefs {
 
     }
 
-    protected CompanySearchMainPage openCompaniesSearchPage() {
+    protected CompanySearchMainPage openCompanySearchPage() {
         return openPage(CompanySearchMainPage.class);
 //        if(!SEARCH_PAGE_URL.equals(getDriver().getCurrentUrl())){
 //            return openPage(CompanySearchMainPage.class);

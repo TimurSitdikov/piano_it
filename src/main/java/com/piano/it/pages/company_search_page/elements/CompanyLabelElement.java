@@ -1,10 +1,8 @@
-package com.piano.it.pages.companies_main_page.elements;
+package com.piano.it.pages.company_search_page.elements;
 
-import com.piano.it.bo.Company;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyLabelElement extends HtmlElement{
@@ -22,23 +20,15 @@ public class CompanyLabelElement extends HtmlElement{
         return companyNameElement.getText().trim();
     }
 
-    public String getLocationName(){
+    public String getLocations(){
         return locationNameElement.getText().trim();
     }
 
-    public List<String> getTags(){
-        List<String> tags = new ArrayList<>();
-        for(HtmlElement tagElement: tagsListElement){
-            tags.add(tagElement.getText().trim());
-        }
-        return tags;
+    public int getTagsAmount(){
+        return tagsListElement.size();
     }
 
-    public Company getCompany(){
-        Company company = new Company();
-        company.setLocation(getLocationName());
-        company.setName(getCompanyName());
-        company.setTags(getTags());
-        return company;
+    public String getTag(int i){
+        return tagsListElement.get(i).getText().trim();
     }
 }

@@ -68,4 +68,12 @@ public class CompanySearchForm extends HtmlElement {
         tagsInput.clear();
         tagsInput.sendKeys(tags);
     }
+
+    public void cleanForm() {
+        companyNameInput.clear();
+        locationInput.clear();
+        if(advancedSearchIsOpened()){
+            tagsInput.clear();
+        }
+    }
 }

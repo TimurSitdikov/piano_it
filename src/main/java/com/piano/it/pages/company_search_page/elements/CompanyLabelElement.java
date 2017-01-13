@@ -31,4 +31,8 @@ public class CompanyLabelElement extends HtmlElement{
     public String getTag(int i){
         return tagsListElement.get(i).getText().trim();
     }
+
+    public void openCompanyPage(){
+        companyNameElement.click();
+    }
 }

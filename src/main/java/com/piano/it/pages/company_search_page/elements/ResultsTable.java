@@ -17,6 +17,9 @@ public class ResultsTable extends HtmlElement {
     @FindBy(xpath = "//*[contains(@class,'test-pagination-next')]")
     private Button nextPageButton;
 
+    @FindBy(xpath = "(//*[@class='pagination']//*[contains(@class,'job-link') and not(contains(@class,'test-pagination-next'))])[last()]")
+    private Button lastPaginationButtonWithNumber;
+
     public List<Company> getCompanies() {
         List<Company> companies = new ArrayList<>();
         for (CompanyLabelElement companyLabelElement : companyLabelElements) {
@@ -39,5 +42,19 @@ public class ResultsTable extends HtmlElement {
 
     public boolean nextButtonIsDisplayed() {
         return nextPageButton.exists() && nextPageButton.isDisplayed();
+    }
+
+    public void openCompanyPage(int i){
+        companyLabelElements.get(i).openCompanyPage();
+    }
+
+    public int getAmountOfCompanies(){
+        return companyLabelElements.size();
+    }
+
+    public int getNumberOfPagesWithResults(){
+        if(lastPaginationButtonWithNumber.isDisplayed()){
+            return Integer.parseInt(lastPaginationButtonWithNumber.getText().trim());
+        } else return 1;
     }
 }

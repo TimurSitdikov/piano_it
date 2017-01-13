@@ -27,7 +27,7 @@ public class CompanySearchForm extends HtmlElement {
     @FindBy(xpath = ".//button[contains(@class,'js-cancel')]")
     private Button cancelAdvancedSearch;
 
-    @FindBy(xpath = "//*[contains(@class,'tag-editor ')]")
+    @FindBy(xpath = "//*[contains(@id,'tagEditor-tl')]")
     private TextInput tagsInput;
 
     public void enterCompanyName(String companyName){
@@ -43,8 +43,10 @@ public class CompanySearchForm extends HtmlElement {
     public void clickSearch(){
         if(simpleSearchButton.isEnabled()){
             simpleSearchButton.click();
+        } else if(advancedSearchButton.isEnabled()){
+            advancedSearchButton.click();
         } else {
-            throw new CommonTestException("Simple search button is disabled or not displayed.");
+            throw new CommonTestException("Search buttons are disabled or not displayed.");
         }
     }
 

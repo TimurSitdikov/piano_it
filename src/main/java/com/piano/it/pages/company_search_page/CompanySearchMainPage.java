@@ -2,6 +2,7 @@ package com.piano.it.pages.company_search_page;
 
 import com.piano.it.bo.Company;
 import com.piano.it.pages.AbstractPage;
+import com.piano.it.pages.company_page.CompanyPage;
 import com.piano.it.pages.company_search_page.elements.CompanySearchForm;
 import com.piano.it.pages.company_search_page.elements.ResultsTable;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +35,7 @@ public class CompanySearchMainPage extends AbstractPage {
         if(company.getLocations()!= null && !company.getLocations().isEmpty()) companySearchForm.enterLocations(company.getLocations());
         if(company.getTags()!= null && !company.getTags().isEmpty()){
             companySearchForm.openAdvancedSearch();
+            waitForJSandJQueryToLoad();
             companySearchForm.enterTags(company.getTags());
         }
         companySearchForm.clickSearch();
@@ -52,5 +54,19 @@ public class CompanySearchMainPage extends AbstractPage {
     public void nextPage(){
         resultsTable.clickNext();
         waitForJSandJQueryToLoad();
+    }
+
+    public CompanyPage clickOnCompany(int i){
+        resultsTable.openCompanyPage(i);
+        waitForJSandJQueryToLoad();
+        return initPage(CompanyPage.class);
+    }
+
+    public int getAmountOfCompaniesOnPage(){
+        return resultsTable.getAmountOfCompanies();
+    }
+
+    public int getAmountOfPagesWithSearchResults(){
+        return resultsTable.getNumberOfPagesWithResults();
     }
 }

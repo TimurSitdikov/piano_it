@@ -29,6 +29,12 @@ public class CompanySearchMainPage extends AbstractPage {
         return "https://stackoverflow.com/jobs/companies";
     }
 
+    @Override
+    public boolean isCorrectPageOpened() {
+        waitForJSandJQueryToLoad();
+        return companySearchForm.isDisplayed();
+    }
+
     public void searchFor(Company company) {
         companySearchForm.cleanForm();
         if(company.getName() != null && !company.getName().isEmpty()) companySearchForm.enterCompanyName(company.getName());

@@ -35,6 +35,12 @@ public class CompanyPage extends AbstractPage {
         return "";
     }
 
+    @Override
+    public boolean isCorrectPageOpened() {
+        waitForJSandJQueryToLoad();
+        return backToListLink.isDisplayed();
+    }
+
     public String getCompanyName(){
         return companyName.getText().trim();
     }

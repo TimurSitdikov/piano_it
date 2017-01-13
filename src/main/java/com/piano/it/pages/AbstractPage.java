@@ -1,5 +1,6 @@
 package com.piano.it.pages;
 
+import com.piano.it.exceptions.CommonTestException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +28,8 @@ public abstract class AbstractPage {
     public abstract void waitUntilPageCompletelyLoaded();
 
     public abstract String getUrl();
+
+    public abstract boolean isCorrectPageOpened();
 
     public WebDriver getDriver() {
         return driver;
@@ -74,6 +77,10 @@ public abstract class AbstractPage {
             T page = initPage(clazz);
             driver.get(page.getUrl());
             page.waitUntilPageCompletelyLoaded();
+            if(!page.isCorrectPageOpened()){
+                throw new CommonTestException("Incorrect page opened. Expected: " + clazz.getSimpleName()
+                        + ". But found: " + driver.getCurrentUrl());
+            }
             return page;
         } else {
             return initPage(clazz);
@@ -92,7 +99,6 @@ public abstract class AbstractPage {
 
     public boolean waitForJSandJQueryToLoad() {
         WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
-        // wait for jQuery to load
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
@@ -100,13 +106,11 @@ public abstract class AbstractPage {
                     return ((Long)((JavascriptExecutor)getDriver()).executeScript("return jQuery.active") == 0);
                 }
                 catch (Exception e) {
-                    // no jQuery present
                     return true;
                 }
             }
         };
 
-        // wait for Javascript to load
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {

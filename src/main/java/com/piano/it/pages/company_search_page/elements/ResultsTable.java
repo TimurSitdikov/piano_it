@@ -53,7 +53,7 @@ public class ResultsTable extends HtmlElement {
     }
 
     public int getNumberOfPagesWithResults(){
-        if(lastPaginationButtonWithNumber.isDisplayed()){
+        if(lastPaginationButtonWithNumber.exists() && lastPaginationButtonWithNumber.isDisplayed()){
             return Integer.parseInt(lastPaginationButtonWithNumber.getText().trim());
         } else return 1;
     }

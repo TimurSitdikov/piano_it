@@ -35,7 +35,7 @@ public class CompanySearchMainPage extends AbstractPage {
         return companySearchForm.isDisplayed();
     }
 
-    public void searchFor(Company company) {
+    public void searchFor(Company company, boolean dontClickSearch) {
         companySearchForm.cleanForm();
         if(company.getName() != null && !company.getName().isEmpty()) companySearchForm.enterCompanyName(company.getName());
         if(company.getLocations()!= null && !company.getLocations().isEmpty()) companySearchForm.enterLocations(company.getLocations());
@@ -44,7 +44,7 @@ public class CompanySearchMainPage extends AbstractPage {
             waitForJSandJQueryToLoad();
             companySearchForm.enterTags(company.getTags());
         }
-        companySearchForm.clickSearch();
+        if(!dontClickSearch) companySearchForm.clickSearch();
         waitForJSandJQueryToLoad();
     }
 
@@ -74,5 +74,9 @@ public class CompanySearchMainPage extends AbstractPage {
 
     public int getAmountOfPagesWithSearchResults(){
         return resultsTable.getNumberOfPagesWithResults();
+    }
+
+    public boolean areLocationProposalsAvailableFor(String companyNamePart) {
+        return companySearchForm.areLocationProposalsAvailableFor(companyNamePart);
     }
 }

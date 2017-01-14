@@ -16,9 +16,9 @@ public class SearchStepDefs extends AbstractStepDefs {
 
     private final int PAGES_TO_CHECK_LIMIT = 5;
 
-    @When("^I search for company(?: from|):$")
-    public void iSearchForCompanyCompany(List<Company> companies) {
-        openPage(CompanySearchMainPage.class).searchFor(companies.get(0));
+    @When("^I search for company(?: from|)(| but not click submit):$")
+    public void iSearchForCompanyCompany(String dontClickSearch,List<Company> companies) {
+        openPage(CompanySearchMainPage.class).searchFor(companies.get(0), !dontClickSearch.isEmpty());
     }
 
     @Then("^I check that results contain company:$")
@@ -72,7 +72,7 @@ public class SearchStepDefs extends AbstractStepDefs {
         if (numberOfPages > PAGES_TO_CHECK_LIMIT) numberOfPages = PAGES_TO_CHECK_LIMIT;
         for (int i = 0; i < numberOfPages; i++) {
             for (int j = 0; j < mainPage.getAmountOfCompaniesOnPage(); j++) {
-                CompanyPage companyPage = mainPage.clickOnCompany(i);
+                CompanyPage companyPage = mainPage.clickOnCompany(j);
                 boolean atLeastOneTagFound = false;
                 List<String> actualTags = companyPage.getTags();
                 for (String expectedTag : expectedTagsList) {
@@ -88,5 +88,12 @@ public class SearchStepDefs extends AbstractStepDefs {
             mainPage.nextPage();
         }
         softAssert.assertAll();
+    }
+
+    @Then("^I check that location proposals are available for: (.*)$")
+    public void iCheckThatSearchProposalsAreAvailableForWiki(String locationNamePart) {
+        CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
+        Assert.assertTrue(mainPage.areLocationProposalsAvailableFor(locationNamePart),
+                "Search proposals are not available for " + locationNamePart);
     }
 }

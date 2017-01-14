@@ -41,27 +41,31 @@ public class CompanyPage extends AbstractPage {
         return backToListLink.isDisplayed();
     }
 
-    public String getCompanyName(){
-        return companyName.getText().trim();
+    public String getCompanyName() {
+        if (companyName.exists() && companyName.isDisplayed()) {
+            return companyName.getText().trim();
+        } else {
+            return "Company name not found";
+        }
     }
 
-    public int getTagsAmount(){
+    public int getTagsAmount() {
         return tags.size();
     }
 
-    public String getTag(int i){
+    public String getTag(int i) {
         return tags.get(i).getText().trim();
     }
 
-    public List<String> getTags(){
+    public List<String> getTags() {
         List<String> tagsStringList = new ArrayList<>();
-        for (HtmlElement tag: tags){
+        for (HtmlElement tag : tags) {
             tagsStringList.add(tag.getText().trim());
         }
         return tagsStringList;
     }
 
-    public CompanySearchMainPage goBackToList(){
+    public CompanySearchMainPage goBackToList() {
         backToListLink.click();
         waitForJSandJQueryToLoad();
         return initPage(CompanySearchMainPage.class);

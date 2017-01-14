@@ -21,22 +21,22 @@ public class SearchStepDefs extends AbstractStepDefs {
         openPage(CompanySearchMainPage.class).searchFor(companies.get(0), !dontClickSearch.isEmpty());
     }
 
-    @Then("^I check that results contain company:$")
-    public void iCheckThatResultsContainCompany(List<Company> companies) {
+    @Then("^I check that names of companies in result are like:$")
+    public void iCheckThatResultsContainCompany(List<Company> expectedCompanies) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         int numberOfPagesWithResults = mainPage.getAmountOfPagesWithSearchResults();
         if (numberOfPagesWithResults > PAGES_TO_CHECK_LIMIT) numberOfPagesWithResults = PAGES_TO_CHECK_LIMIT;
+        Company company = expectedCompanies.get(0);
+
         boolean companyFound = true;
         for (int i = 0; i < numberOfPagesWithResults; i++) {
             List<Company> companiesFromPage = mainPage.getCompanies();
-            for (Company company : companies) {
                 if (!companiesFromPage.contains(company)) {
                     companyFound = false;
                 }
-            }
             mainPage.nextPage();
         }
-        Assert.assertTrue(companyFound, "Company: " + companies.get(0) + " not found.");
+        Assert.assertTrue(companyFound, "Company: " + company + " not found.");
     }
 
     @Then("^I check that companies in result are from: (.*)$")

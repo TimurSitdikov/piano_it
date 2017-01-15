@@ -46,7 +46,9 @@ public class Company {
 
         Company company = (Company) o;
 
-        return name.toLowerCase().contains(company.getName().toLowerCase());
+        if (name != null ? !name.equals(company.name) : company.name != null) return false;
+        if (locations != null ? !locations.equals(company.locations) : company.locations != null) return false;
+        return tags != null ? tags.equals(company.tags) : company.tags == null;
     }
 
     @Override

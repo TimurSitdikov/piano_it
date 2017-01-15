@@ -17,26 +17,27 @@ public class SearchStepDefs extends AbstractStepDefs {
     private final int PAGES_TO_CHECK_LIMIT = 5;
 
     @When("^I search for company(?: from|)(| but not click submit):$")
-    public void iSearchForCompanyCompany(String dontClickSearch,List<Company> companies) {
+    public void iSearchForCompanyCompany(String dontClickSearch, List<Company> companies) {
         openPage(CompanySearchMainPage.class).searchFor(companies.get(0), !dontClickSearch.isEmpty());
     }
 
-    @Then("^I check that names of companies in result are like:$")
-    public void iCheckThatResultsContainCompany(List<Company> expectedCompanies) {
+    @Then("^I check that names of companies in result are like: (.*)$")
+    public void iCheckThatResultsContainCompany(String expectedName) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         int numberOfPagesWithResults = mainPage.getAmountOfPagesWithSearchResults();
         if (numberOfPagesWithResults > PAGES_TO_CHECK_LIMIT) numberOfPagesWithResults = PAGES_TO_CHECK_LIMIT;
-        Company company = expectedCompanies.get(0);
 
-        boolean companyFound = true;
+        SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < numberOfPagesWithResults; i++) {
             List<Company> companiesFromPage = mainPage.getCompanies();
-                if (!companiesFromPage.contains(company)) {
-                    companyFound = false;
-                }
+            for (Company companyFromPage : companiesFromPage) {
+                softAssert.assertTrue(companyFromPage.getName().toLowerCase()
+                                .contains(expectedName.toLowerCase()),
+                        "Company: " + expectedName + " not found.");
+            }
             mainPage.nextPage();
         }
-        Assert.assertTrue(companyFound, "Company: " + company + " not found.");
+        softAssert.assertAll();
     }
 
     @Then("^I check that companies in result are from: (.*)$")

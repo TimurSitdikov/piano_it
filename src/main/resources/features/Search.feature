@@ -7,9 +7,7 @@ Feature: Feature to test search mechanism.
     When I search for company:
       | name   |
       | <name> |
-    Then I check that names of companies in result are like:
-      | name   |
-      | <name> |
+    Then I check that names of companies in result are like: <name>
 
     Examples:
       | name    |
@@ -29,9 +27,7 @@ Feature: Feature to test search mechanism.
     When I search for company:
       | name   | locations   |
       | <name> | <locations> |
-    Then I check that names of companies in result are like:
-      | name   |
-      | <name> |
+    Then I check that names of companies in result are like: <name>
     And I check that companies in result are from: <locations>
 
     Examples:

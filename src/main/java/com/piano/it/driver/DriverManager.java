@@ -48,8 +48,8 @@ public class DriverManager {
     }
 
     public static void quitAllDrivers() {
-        for(Iterator<Map.Entry<DriverType,WebDriver>> iterator = driverList.entrySet().iterator();
-            iterator.hasNext();){
+        for (Iterator<Map.Entry<DriverType, WebDriver>> iterator = driverList.entrySet().iterator();
+             iterator.hasNext(); ) {
             iterator.next().getValue().quit();
             iterator.remove();
         }

@@ -44,16 +44,16 @@ public class ResultsTable extends HtmlElement {
         return nextPageButton.exists() && nextPageButton.isDisplayed();
     }
 
-    public void openCompanyPage(int i){
+    public void openCompanyPage(int i) {
         companyLabelElements.get(i).openCompanyPage();
     }
 
-    public int getAmountOfCompanies(){
+    public int getAmountOfCompanies() {
         return companyLabelElements.size();
     }
 
-    public int getNumberOfPagesWithResults(){
-        if(lastPaginationButtonWithNumber.exists() && lastPaginationButtonWithNumber.isDisplayed()){
+    public int getNumberOfPagesWithResults() {
+        if (lastPaginationButtonWithNumber.exists() && lastPaginationButtonWithNumber.isDisplayed()) {
             return Integer.parseInt(lastPaginationButtonWithNumber.getText().trim());
         } else return 1;
     }

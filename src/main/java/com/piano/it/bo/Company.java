@@ -18,11 +18,10 @@ public class Company {
         return locations;
     }
 
-    public void addTag(String tag){
-        if(tags == null || tags.isEmpty()){
+    public void addTag(String tag) {
+        if (tags == null || tags.isEmpty()) {
             tags = tag;
-        }
-        else{
+        } else {
             tags = tags + "," + tag;
         }
     }

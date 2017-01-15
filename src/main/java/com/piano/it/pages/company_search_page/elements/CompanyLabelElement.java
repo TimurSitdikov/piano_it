@@ -5,7 +5,7 @@ import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
 import java.util.List;
 
-public class CompanyLabelElement extends HtmlElement{
+public class CompanyLabelElement extends HtmlElement {
 
     @FindBy(xpath = ".//*[@class='title']")
     private HtmlElement companyNameElement;
@@ -16,23 +16,23 @@ public class CompanyLabelElement extends HtmlElement{
     @FindBy(xpath = ".//*[contains(@class,'post-tag')]")
     private List<HtmlElement> tagsListElement;
 
-    public String getCompanyName(){
+    public String getCompanyName() {
         return companyNameElement.getText().trim();
     }
 
-    public String getLocations(){
+    public String getLocations() {
         return locationNameElement.getText().trim();
     }
 
-    public int getTagsAmount(){
+    public int getTagsAmount() {
         return tagsListElement.size();
     }
 
-    public String getTag(int i){
+    public String getTag(int i) {
         return tagsListElement.get(i).getText().trim();
     }
 
-    public void openCompanyPage(){
+    public void openCompanyPage() {
         companyNameElement.click();
     }
 }

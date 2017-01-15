@@ -10,7 +10,7 @@ import java.lang.reflect.Constructor;
 public class AbstractStepDefs {
 
     private WebDriver driver;
-    private final String SEARCH_PAGE_URL = "https://stackoverflow.com/jobs/companies";
+    public static AbstractPage currentPage;
 
 
     protected WebDriver getDriver() {
@@ -45,30 +45,25 @@ public class AbstractStepDefs {
     }
 
     protected <T extends AbstractPage> T openPage(Class<T> clazz) {
-        if(AbstractPage.currentPage == null || AbstractPage.currentPage.getClass() != clazz){
+        if (currentPage == null || currentPage.getClass() != clazz) {
             T page = initPage(clazz);
             getDriver().get(page.getUrl());
             page.waitUntilPageCompletelyLoaded();
             return page;
         } else {
-            return (T) AbstractPage.currentPage;
+            return (T) currentPage;
         }
 
     }
 
     protected CompanySearchMainPage openCompanySearchPage() {
         return openPage(CompanySearchMainPage.class);
-//        if(!SEARCH_PAGE_URL.equals(getDriver().getCurrentUrl())){
-//            return openPage(CompanySearchMainPage.class);
-//        } else {
-//            return initPage(CompanySearchMainPage.class);
-//        }
     }
 
     private void setCurrentPage(AbstractPage abstractPage) {
-        if (AbstractPage.currentPage == null
-                || abstractPage.getClass() != AbstractPage.currentPage.getClass()) {
-            AbstractPage.currentPage = abstractPage;
+        if (currentPage == null
+                || abstractPage.getClass() != currentPage.getClass()) {
+            currentPage = abstractPage;
         }
     }
 }

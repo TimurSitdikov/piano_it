@@ -37,14 +37,16 @@ public class CompanySearchMainPage extends AbstractPage {
 
     public void searchFor(Company company, boolean dontClickSearch) {
         companySearchForm.cleanForm();
-        if(company.getName() != null && !company.getName().isEmpty()) companySearchForm.enterCompanyName(company.getName());
-        if(company.getLocations()!= null && !company.getLocations().isEmpty()) companySearchForm.enterLocations(company.getLocations());
-        if(company.getTags()!= null && !company.getTags().isEmpty()){
+        if (company.getName() != null && !company.getName().isEmpty())
+            companySearchForm.enterCompanyName(company.getName());
+        if (company.getLocations() != null && !company.getLocations().isEmpty())
+            companySearchForm.enterLocations(company.getLocations());
+        if (company.getTags() != null && !company.getTags().isEmpty()) {
             companySearchForm.openAdvancedSearch();
             waitForJSandJQueryToLoad();
             companySearchForm.enterTags(company.getTags());
         }
-        if(!dontClickSearch) companySearchForm.clickSearch();
+        if (!dontClickSearch) companySearchForm.clickSearch();
         waitForJSandJQueryToLoad();
     }
 
@@ -53,26 +55,26 @@ public class CompanySearchMainPage extends AbstractPage {
         return resultsTable.getCompanies();
     }
 
-    public boolean hasNextResultPage(){
+    public boolean hasNextResultPage() {
         return resultsTable.nextButtonIsDisplayed();
     }
 
-    public void nextPage(){
+    public void nextPage() {
         resultsTable.clickNext();
         waitForJSandJQueryToLoad();
     }
 
-    public CompanyPage clickOnCompany(int i){
+    public CompanyPage clickOnCompany(int i) {
         resultsTable.openCompanyPage(i);
         waitForJSandJQueryToLoad();
         return initPage(CompanyPage.class);
     }
 
-    public int getAmountOfCompaniesOnPage(){
+    public int getAmountOfCompaniesOnPage() {
         return resultsTable.getAmountOfCompanies();
     }
 
-    public int getAmountOfPagesWithSearchResults(){
+    public int getAmountOfPagesWithSearchResults() {
         return resultsTable.getNumberOfPagesWithResults();
     }
 

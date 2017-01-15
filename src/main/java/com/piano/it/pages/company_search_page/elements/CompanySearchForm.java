@@ -3,7 +3,6 @@ package com.piano.it.pages.company_search_page.elements;
 import com.piano.it.exceptions.CommonTestException;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.Button;
-import ru.yandex.qatools.htmlelements.element.CheckBox;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import ru.yandex.qatools.htmlelements.element.TextInput;
 
@@ -86,9 +85,9 @@ public class CompanySearchForm extends HtmlElement {
     }
 
     public boolean areLocationProposalsAvailableFor(String companyNamePart) {
-        if(searchProposals.size() == 0) return false;
-        for(HtmlElement proposal: searchProposals){
-            if(!proposal.getText().toLowerCase().contains(companyNamePart.toLowerCase())) return false;
+        if (searchProposals.size() == 0) return false;
+        for (HtmlElement proposal : searchProposals) {
+            if (!proposal.getText().toLowerCase().contains(companyNamePart.toLowerCase())) return false;
         }
         return true;
     }

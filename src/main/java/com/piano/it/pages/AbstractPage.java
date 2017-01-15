@@ -1,6 +1,7 @@
 package com.piano.it.pages;
 
 import com.piano.it.exceptions.CommonTestException;
+import com.piano.it.step_defs.AbstractStepDefs;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,8 +15,6 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory
 import java.lang.reflect.Constructor;
 
 public abstract class AbstractPage {
-
-    public static AbstractPage currentPage;
 
     private final WebDriver driver;
     private final int DEFAULT_TIMEOUT = 10;
@@ -73,7 +72,7 @@ public abstract class AbstractPage {
     }
 
     protected <T extends AbstractPage> T openPage(Class<T> clazz){
-        if(!currentPage.getClass().equals(clazz)){
+        if(!AbstractStepDefs.currentPage.getClass().equals(clazz)){
             T page = initPage(clazz);
             driver.get(page.getUrl());
             page.waitUntilPageCompletelyLoaded();
@@ -92,32 +91,24 @@ public abstract class AbstractPage {
     }
 
     private void setCurrentPage(AbstractPage abstractPage){
-        if(currentPage == null || currentPage != abstractPage){
-            currentPage = abstractPage;
+        if(AbstractStepDefs.currentPage == null || AbstractStepDefs.currentPage != abstractPage){
+            AbstractStepDefs.currentPage = abstractPage;
         }
     }
 
     public boolean waitForJSandJQueryToLoad() {
         WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
-        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                try {
-                    return ((Long)((JavascriptExecutor)getDriver()).executeScript("return jQuery.active") == 0);
-                }
-                catch (Exception e) {
-                    return true;
-                }
+        ExpectedCondition<Boolean> jQueryLoad = driver -> {
+            try {
+                return ((Long)((JavascriptExecutor)getDriver()).executeScript("return jQuery.active") == 0);
+            }
+            catch (Exception e) {
+                return true;
             }
         };
 
-        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return ((JavascriptExecutor)getDriver()).executeScript("return document.readyState")
-                        .toString().equals("complete");
-            }
-        };
+        ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor)getDriver()).executeScript("return document.readyState")
+                .toString().equals("complete");
 
         return wait.until(jQueryLoad) && wait.until(jsLoad);
     }

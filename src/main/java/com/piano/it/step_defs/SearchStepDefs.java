@@ -24,9 +24,7 @@ public class SearchStepDefs extends AbstractStepDefs {
     @Then("^I check that names of companies in result are like: (.*)$")
     public void iCheckThatResultsContainCompany(String expectedName) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
-        int numberOfPagesWithResults = mainPage.getAmountOfPagesWithSearchResults();
-        if (numberOfPagesWithResults > PAGES_TO_CHECK_LIMIT) numberOfPagesWithResults = PAGES_TO_CHECK_LIMIT;
-
+        int numberOfPagesWithResults = getNumberOfPagesToCheck(mainPage);
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < numberOfPagesWithResults; i++) {
             List<Company> companiesFromPage = mainPage.getCompanies();
@@ -44,8 +42,7 @@ public class SearchStepDefs extends AbstractStepDefs {
     public void iCheckThatCompaniesInResultAreFromLocation(List<String> expectedLocations) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         SoftAssert softAssert = new SoftAssert();
-        int numberOfPagesWithResults = mainPage.getAmountOfPagesWithSearchResults();
-        if (numberOfPagesWithResults > PAGES_TO_CHECK_LIMIT) numberOfPagesWithResults = PAGES_TO_CHECK_LIMIT;
+        int numberOfPagesWithResults = getNumberOfPagesToCheck(mainPage);
         for (int i = 0; i < numberOfPagesWithResults; i++) {
             List<Company> companiesFromPage = mainPage.getCompanies();
             for (Company companyFromPage : companiesFromPage) {
@@ -69,8 +66,7 @@ public class SearchStepDefs extends AbstractStepDefs {
     public void iCheckThatCompaniesInResultHaveTagsTags(List<String> expectedTagsList) {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         SoftAssert softAssert = new SoftAssert();
-        int numberOfPages = mainPage.getAmountOfPagesWithSearchResults();
-        if (numberOfPages > PAGES_TO_CHECK_LIMIT) numberOfPages = PAGES_TO_CHECK_LIMIT;
+        int numberOfPages = getNumberOfPagesToCheck(mainPage);
         for (int i = 0; i < numberOfPages; i++) {
             for (int j = 0; j < mainPage.getAmountOfCompaniesOnPage(); j++) {
                 CompanyPage companyPage = mainPage.clickOnCompany(j);
@@ -96,5 +92,10 @@ public class SearchStepDefs extends AbstractStepDefs {
         CompanySearchMainPage mainPage = openPage(CompanySearchMainPage.class);
         Assert.assertTrue(mainPage.areLocationProposalsAvailableFor(locationNamePart),
                 "Search proposals are not available for " + locationNamePart);
+    }
+
+    private int getNumberOfPagesToCheck(CompanySearchMainPage mainPage) {
+        return mainPage.getAmountOfPagesWithSearchResults() > PAGES_TO_CHECK_LIMIT ?
+                PAGES_TO_CHECK_LIMIT : mainPage.getAmountOfPagesWithSearchResults();
     }
 }

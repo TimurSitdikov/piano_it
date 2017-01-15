@@ -6,15 +6,9 @@ import cucumber.api.java.Before;
 
 public class TestBackground {
 
-    private boolean start = false;
-
-    @Before
-    public void setUp(){
-        if(!start) start = true;
-    }
-
     @After
     public void tearDown(){
         DriverManager.quitAllDrivers();
     }
+
 }

@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class DriverManager {
@@ -38,6 +39,7 @@ public class DriverManager {
     public static void quitDriver(DriverType driverType) {
         if (driverList.get(driverType) != null) {
             driverList.get(driverType).quit();
+            driverList.remove(driverType);
         }
     }
 
@@ -46,9 +48,10 @@ public class DriverManager {
     }
 
     public static void quitAllDrivers() {
-        for (Map.Entry<DriverType, WebDriver> entry : driverList.entrySet()) {
-            entry.getValue().quit();
-            driverList.remove(entry.getKey());
+        for(Iterator<Map.Entry<DriverType,WebDriver>> iterator = driverList.entrySet().iterator();
+            iterator.hasNext();){
+            iterator.next().getValue().quit();
+            iterator.remove();
         }
         AbstractPage.currentPage = null;
     }

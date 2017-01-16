@@ -29,8 +29,14 @@ public class SearchStepDefs extends AbstractStepDefs {
         for (int i = 0; i < numberOfPagesWithResults; i++) {
             List<Company> companiesFromPage = mainPage.getCompanies();
             for (Company companyFromPage : companiesFromPage) {
-                softAssert.assertTrue(companyFromPage.getName().toLowerCase()
-                                .contains(expectedName.toLowerCase()),
+                boolean resultIsCorrect = true;
+                if(!companyFromPage.getName().toLowerCase()
+                        .contains(expectedName.toLowerCase())){
+                    CompanyPage companyPage = mainPage.clickOnCompany(companyFromPage);
+                    resultIsCorrect = companyPage.pageContainsKeyword(expectedName);
+                    companyPage.goBackToList();
+                }
+                softAssert.assertTrue(resultIsCorrect,
                         "Company: " + companyFromPage.getName()
                                 + "  does not meet the search criteria: " + expectedName);
             }

@@ -1,6 +1,7 @@
 package com.piano.it.pages.company_search_page.elements;
 
 import com.piano.it.bo.Company;
+import com.piano.it.exceptions.CommonTestException;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
@@ -56,5 +57,17 @@ public class ResultsTable extends HtmlElement {
         if (lastPaginationButtonWithNumber.exists() && lastPaginationButtonWithNumber.isDisplayed()) {
             return Integer.parseInt(lastPaginationButtonWithNumber.getText().trim());
         } else return 1;
+    }
+
+    public void openCompanyPage(Company company){
+        boolean companyFound = false;
+        for(CompanyLabelElement companyLabelElement: companyLabelElements){
+            if(company.getName().equalsIgnoreCase(companyLabelElement.getCompanyName())){
+                companyLabelElement.openCompanyPage();
+                companyFound = true;
+                break;
+            }
+        }
+        if(!companyFound) throw new CommonTestException("Company: " + company + " not found.");
     }
 }

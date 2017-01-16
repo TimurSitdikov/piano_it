@@ -81,4 +81,10 @@ public class CompanySearchMainPage extends AbstractPage {
     public boolean areLocationProposalsAvailableFor(String companyNamePart) {
         return companySearchForm.areLocationProposalsAvailableFor(companyNamePart);
     }
+
+    public CompanyPage clickOnCompany(Company company) {
+        resultsTable.openCompanyPage(company);
+        waitForJSandJQueryToLoad();
+        return initPage(CompanyPage.class);
+    }
 }

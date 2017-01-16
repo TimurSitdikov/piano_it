@@ -21,6 +21,9 @@ public class CompanyPage extends AbstractPage {
     @FindBy(xpath = "//*[@data-company-section='company-info']/h1")
     private HtmlElement companyName;
 
+    @FindBy(xpath = "//*[@class='container']")
+    private HtmlElement contentContainer;
+
     public CompanyPage(WebDriver driver) {
         super(driver);
     }
@@ -69,5 +72,9 @@ public class CompanyPage extends AbstractPage {
         backToListLink.click();
         waitForJSandJQueryToLoad();
         return initPage(CompanySearchMainPage.class);
+    }
+
+    public boolean pageContainsKeyword(String expectedName) {
+        return contentContainer.getText().toLowerCase().contains(expectedName.toLowerCase());
     }
 }

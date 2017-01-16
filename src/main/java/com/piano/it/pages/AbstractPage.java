@@ -21,7 +21,7 @@ public abstract class AbstractPage {
 
     public AbstractPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver)),this);
+        PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver)), this);
     }
 
     public abstract void waitUntilPageCompletelyLoaded();
@@ -34,27 +34,27 @@ public abstract class AbstractPage {
         return driver;
     }
 
-    protected void waitForElementVisible(WebElement webElement, int timeout){
+    protected void waitForElementVisible(WebElement webElement, int timeout) {
         new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOf(webElement));
     }
 
-    protected void waitForElementVisible(WebElement webElement){
+    protected void waitForElementVisible(WebElement webElement) {
         waitForElementVisible(webElement, DEFAULT_TIMEOUT);
     }
 
-    protected void waitForElementClickable(int timeout, WebElement... webElements){
+    protected void waitForElementClickable(int timeout, WebElement... webElements) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        for (WebElement webElement: webElements){
+        for (WebElement webElement : webElements) {
             wait.until(ExpectedConditions.elementToBeClickable(webElement));
         }
     }
 
-    protected void waitForElementClickable(WebElement... webElements){
+    protected void waitForElementClickable(WebElement... webElements) {
         waitForElementClickable(DEFAULT_TIMEOUT, webElements);
     }
 
 
-    protected  <T extends AbstractPage> T initPage(Class<T> clazz){
+    protected <T extends AbstractPage> T initPage(Class<T> clazz) {
         try {
             try {
                 Constructor<T> constructor = clazz.getConstructor(WebDriver.class);
@@ -71,12 +71,12 @@ public abstract class AbstractPage {
         }
     }
 
-    protected <T extends AbstractPage> T openPage(Class<T> clazz){
-        if(!AbstractStepDefs.currentPage.getClass().equals(clazz)){
+    protected <T extends AbstractPage> T openPage(Class<T> clazz) {
+        if (!AbstractStepDefs.currentPage.getClass().equals(clazz)) {
             T page = initPage(clazz);
             driver.get(page.getUrl());
             page.waitUntilPageCompletelyLoaded();
-            if(!page.isCorrectPageOpened()){
+            if (!page.isCorrectPageOpened()) {
                 throw new CommonTestException("Incorrect page opened. Expected: " + clazz.getSimpleName()
                         + ". But found: " + driver.getCurrentUrl());
             }
@@ -86,12 +86,12 @@ public abstract class AbstractPage {
         }
     }
 
-    public void goBack(){
+    public void goBack() {
         getDriver().navigate().back();
     }
 
-    private void setCurrentPage(AbstractPage abstractPage){
-        if(AbstractStepDefs.currentPage == null || AbstractStepDefs.currentPage != abstractPage){
+    private void setCurrentPage(AbstractPage abstractPage) {
+        if (AbstractStepDefs.currentPage == null || AbstractStepDefs.currentPage != abstractPage) {
             AbstractStepDefs.currentPage = abstractPage;
         }
     }
@@ -100,14 +100,13 @@ public abstract class AbstractPage {
         WebDriverWait wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
         ExpectedCondition<Boolean> jQueryLoad = driver -> {
             try {
-                return ((Long)((JavascriptExecutor)getDriver()).executeScript("return jQuery.active") == 0);
-            }
-            catch (Exception e) {
+                return ((Long) ((JavascriptExecutor) getDriver()).executeScript("return jQuery.active") == 0);
+            } catch (Exception e) {
                 return true;
             }
         };
 
-        ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor)getDriver()).executeScript("return document.readyState")
+        ExpectedCondition<Boolean> jsLoad = driver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState")
                 .toString().equals("complete");
 
         return wait.until(jQueryLoad) && wait.until(jsLoad);

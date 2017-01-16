@@ -1,6 +1,7 @@
 package com.piano.it.driver;
 
 import com.piano.it.pages.AbstractPage;
+import com.piano.it.step_defs.AbstractStepDefs;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -53,6 +54,6 @@ public class DriverManager {
             iterator.next().getValue().quit();
             iterator.remove();
         }
-        AbstractPage.currentPage = null;
+        AbstractStepDefs.currentPage = null;
     }
 }

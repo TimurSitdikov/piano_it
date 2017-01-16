@@ -31,7 +31,8 @@ public class SearchStepDefs extends AbstractStepDefs {
             for (Company companyFromPage : companiesFromPage) {
                 softAssert.assertTrue(companyFromPage.getName().toLowerCase()
                                 .contains(expectedName.toLowerCase()),
-                        "Company: " + expectedName + " not found.");
+                        "Company: " + companyFromPage.getName()
+                                + "  does not meet the search criteria: " + expectedName);
             }
             mainPage.nextPage();
         }

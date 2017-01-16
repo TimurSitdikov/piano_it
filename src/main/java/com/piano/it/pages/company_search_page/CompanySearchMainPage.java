@@ -32,7 +32,7 @@ public class CompanySearchMainPage extends AbstractPage {
     @Override
     public boolean isCorrectPageOpened() {
         waitForJSandJQueryToLoad();
-        return companySearchForm.isDisplayed();
+        return companySearchForm.exists();
     }
 
     public void searchFor(Company company, boolean dontClickSearch) {
